@@ -18,6 +18,7 @@ import {
 import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi.js"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Login = () => {
@@ -42,6 +43,8 @@ const Login = () => {
             isSuccess: loginIsSuccess
         }
     ] = useLoginUserMutation()
+
+    const navigate = useNavigate()
 
     const handleChangeInput =(e, type) =>{
         const {name, value} = e.target
@@ -72,6 +75,7 @@ const Login = () => {
         }
         if(loginIsSuccess && loginData){
             toast.success(loginData.message || "Logged in successfully")
+            navigate("/")
         }
         if(loginError){
             toast.error(loginData.data.message || "Login failed")
@@ -80,7 +84,7 @@ const Login = () => {
 
     return (
         <div className="flex items-center justify-center w-full h-screen">
-            <Tabs defaultValue="signup" className="w-[400px]">
+            <Tabs defaultValue="login" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="signup">Signup</TabsTrigger>
                     <TabsTrigger value="login">Login</TabsTrigger>
