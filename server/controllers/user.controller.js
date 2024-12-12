@@ -106,7 +106,6 @@ export const getUserProfile = async(req, res)=>{
         let userId = req.id
 
         const user = await User.findById(userId).select("-password")
-        console.log(user)
 
         if(!user){
             return res.status(404).json({
