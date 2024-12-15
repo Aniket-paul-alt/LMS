@@ -3,7 +3,6 @@ import {deleteMediaFromCloudinary, uploadMedia} from "../utils/cloudinary.js"
 
 export const createCourse = async(req, res)=>{
     try {
-        console.log(req.body)
         const {courseTitle, category} = req.body
 
         console.log(courseTitle, category)
