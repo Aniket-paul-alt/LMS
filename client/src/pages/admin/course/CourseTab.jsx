@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select"
 import { Loader2 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEditCourseMutation } from '@/features/api/courseApi'
+import { useEditCourseMutation, useGetCourseByIdQuery } from '@/features/api/courseApi'
 import { toast } from 'sonner'
 
 const CourseTab = () => {
@@ -34,7 +34,24 @@ const CourseTab = () => {
     const courseId = params.courseId
     const navigate = useNavigate()
 
+    const {data:courseByIdData, isLoading:courseByIdLoading} = useGetCourseByIdQuery(courseId)
     const [editCourse, {data, isLoading, isSuccess, error}] = useEditCourseMutation()
+
+    
+    useEffect(()=>{
+        if(courseByIdData?.course){
+            const course = courseByIdData?.course
+            setInput({
+                courseTitle: course.courseTitle,
+                subTitle: course.subTitle,
+                description: course.description,
+                category: course.category,
+                courseLevel: course.courseLevel,
+                coursePrice: course.coursePrice,
+                courseThumbnail: ""
+            })
+        }
+    },[courseByIdData, courseId])
 
     const changeEventhandler = (e) => {
         const { name, value } = e.target
@@ -81,7 +98,9 @@ const CourseTab = () => {
         }
     },[isSuccess, error])
 
-    const isPublished = true
+    if(courseByIdLoading) return <h1>Loading...</h1>
+
+    const isPublished = false
     return (
         <Card>
             <CardHeader className="flex flex-row justify-between">
