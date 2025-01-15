@@ -253,7 +253,7 @@ export const removeLecture = async(req, res)=>{
 
         //remove the lecture reference from the associated course
         await Course.updateOne({
-            lecture: lectureId // find the course that contains the lecture
+            lectures: lectureId // find the course that contains the lecture
         },{
             $pull:{lectures:lectureId} // remove the lecture id from the lectures array
         })

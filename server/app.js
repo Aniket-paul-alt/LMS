@@ -6,6 +6,7 @@ import connectDB from "./db/dbConnect.js";
 import userRoutes from "./routes/user.route.js"
 import courseRoutes from "./routes/course.route.js"
 import mediaRoute from "./routes/media.route.js"
+import purchaseRoute from "./routes/coursePurchase.route.js"
 
 dotenv.config()
 
@@ -26,6 +27,7 @@ app.use(cors({
 app.use("/api/v1/media", mediaRoute)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/course', courseRoutes)
+app.use('/api/v1/purchase', purchaseRoute)
 
 //dummy api
 // app.get("/home", (_, res)=>{
