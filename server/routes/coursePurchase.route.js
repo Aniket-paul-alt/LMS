@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.route("/checkout/create-checkout-session").post(isAuthenticated, createCheckoutSession)
 router.route("/webhook").post(express.raw({type:"application/json"}), stripeWebhook)
-router.route("/course/:courseId/detail-with-status").get(getCourseDetailWithPurchasedStatus)
-router.route("/").get(getAllPurchasedCourse)
+router.route("/course/:courseId/detail-with-status").get(isAuthenticated, getCourseDetailWithPurchasedStatus)
+router.route("/").get(isAuthenticated, getAllPurchasedCourse)
 
 export default router

@@ -5,11 +5,13 @@ import { Separator } from '@/components/ui/separator'
 import { useGetCourseDetailWithStatusQuery } from '@/features/api/purchaseApi'
 import { BadgeInfo, Lock, PlayCircle } from 'lucide-react'
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import ReactPlayer from 'react-player'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const CourseDetail = () => {
     const params = useParams()
     const courseId = params.courseId
+    const navigate = useNavigate()
 
     const {data, isLoading, isError} = useGetCourseDetailWithStatusQuery(courseId)
 
@@ -17,6 +19,12 @@ const CourseDetail = () => {
     if(isError) return <h1>Failed to load course details</h1>
 
     const {course, purchased} = data
+
+    const handleContinueCourse = () =>{
+        if(purchased){
+            navigate(`/course-progress/${courseId}`)
+        }
+    }
   return (
     <div className='mt-20 space-y-5'>
         <div className='bg-[#2d2f31] text-white'>
@@ -32,9 +40,9 @@ const CourseDetail = () => {
             </div>
         </div>
         <div className='max-w-7xl mx-auto my-5 px-4 md:px-8 flex flex-col lg:flex-row justify-between gap-10'>
-            <div className='w-full lg:w-1/2 space-y-5'>
+            <div className='w-full lg:w-1/2 space-y-5 mb-5'>
                 <h1 className='font-bold text-xl md:text-2xl'>Description</h1>
-                <p className='text-sm'>course description</p>
+                <p className='text-sm' dangerouslySetInnerHTML={{__html: course.description}} />
                 <Card>
                     <CardHeader>
                         <CardTitle>Course Content</CardTitle>
@@ -42,14 +50,14 @@ const CourseDetail = () => {
                     </CardHeader>
                     <CardContent className="space-y-3">
                         {
-                            [1,2,3].map((lecture, idx)=>(
+                            course.lectures.map((lecture, idx)=>(
                                 <div key={idx} className='flex items-center gap-3 text-sm'>
                                     <span>
                                         {
                                             false ? (<PlayCircle size={14} />) : (<Lock size={14} />)
                                         }
                                     </span>
-                                    <p>lecture title</p>
+                                    <p>{lecture.lectureTitle}</p>
                                 </div>
                             ))
                         }
@@ -60,7 +68,12 @@ const CourseDetail = () => {
                 <Card>
                     <CardContent className="p-4 flex flex-col">
                         <div className='w-full aspect-video mb-4'>
-                            React player video
+                            <ReactPlayer
+                                width="100%"
+                                height="100%"
+                                url={course.lectures[0].videoUrl}
+                                controls= {true}
+                            />
                         </div>
                         <h1>Lecture title</h1>
                         <Separator className="my-2"/>
@@ -69,7 +82,7 @@ const CourseDetail = () => {
                     <CardFooter className="flex justify-center p-4">
                         {
                             purchased ? (
-                                <Button className="w-full">Continue Course</Button>
+                                <Button onClick={handleContinueCourse} className="w-full">Continue Course</Button>
                             ) : (
                                 <BuyCourseButton courseId={courseId}/>
                             )

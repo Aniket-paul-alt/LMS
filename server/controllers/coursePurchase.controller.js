@@ -19,7 +19,7 @@ export const createCheckoutSession = async (req, res) => {
             courseId,
             userId,
             amount: course.coursePrice,
-            status: "completed" // force fully completed because of stripe can not recognized by pc
+            status: "pending" // force fully completed because of stripe can not recognized by pc
         })
 
         //create a stripe checkout session
