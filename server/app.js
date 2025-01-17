@@ -7,6 +7,7 @@ import userRoutes from "./routes/user.route.js"
 import courseRoutes from "./routes/course.route.js"
 import mediaRoute from "./routes/media.route.js"
 import purchaseRoute from "./routes/coursePurchase.route.js"
+import courseProgressRoute from "./routes/courseProgress.route.js"
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ app.use("/api/v1/media", mediaRoute)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/course', courseRoutes)
 app.use('/api/v1/purchase', purchaseRoute)
+app.use('/api/v1/progress', courseProgressRoute)
 
 //dummy api
 // app.get("/home", (_, res)=>{
@@ -41,3 +43,4 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, ()=>{
     console.log(`Server listening at port ${PORT}`)
 })
+
