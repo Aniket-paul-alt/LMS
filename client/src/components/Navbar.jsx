@@ -118,7 +118,7 @@ const Navbar = () => {
             {/* Mobile Device */}
             <div className='flex md:hidden items-center justify-between px-4 h-full'>
                 <h1 className='font-extrabold text-2xl'>E-Learing</h1>
-                <MobileNavbar />
+                <MobileNavbar user={user} logoutHandler={logoutHandler}/>
             </div>
         </div>
     )
@@ -126,8 +126,8 @@ const Navbar = () => {
 
 export default Navbar
 
-const MobileNavbar = () => {
-    const role = "instructor"
+const MobileNavbar = ({user, logoutHandler}) => {
+    const navigate = useNavigate()
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -135,20 +135,20 @@ const MobileNavbar = () => {
             </SheetTrigger>
             <SheetContent className="flex flex-col">
                 <SheetHeader className="flex flex-row items-center justify-between mt-2">
-                    <SheetTitle>E-Learning</SheetTitle>
+                    <SheetTitle><Link to="/">E-Learning</Link></SheetTitle>
                     <DarkMode />
                 </SheetHeader>
                 <Separator className='mr-2' />
                 <nav className='flex flex-col space-y-4'>
-                    <span className='flex items-center gap-2'><ViewIcon size={"18"} />My Learning</span>
-                    <span className='flex items-center gap-2'><User size={"18"} />Edit Profile</span>
-                    <p className='flex items-center gap-2'><LogOut size={"18"} />Log out</p>
+                    <Link to="/my-learning" className='flex items-center gap-2'><ViewIcon size={"18"} />My Learning</Link>
+                    <Link to="/profile" className='flex items-center gap-2'><User size={"18"} />Edit Profile</Link>
+                    <p onClick={logoutHandler} className='flex items-center gap-2'><LogOut size={"18"} />Log out</p>
                 </nav>
                 {
-                    role === 'instructor' && (
+                    user?.role === 'instructor' && (
                         <SheetFooter>
                             <SheetClose asChild>
-                                <Button type="submit"><LayoutDashboard size={"18"} />Dashboard</Button>
+                                <Button type="submit" onClick={()=> navigate("/admin/dashboard")}><LayoutDashboard size={"18"} />Dashboard</Button>
                             </SheetClose>
                         </SheetFooter>
                     )

@@ -50,7 +50,7 @@ const Profile = () => {
     const user = data && data.user 
 
     return (
-        <div className='my-24 max-w-4xl mx-auto px-4'>
+        <div className='my-10 max-w-4xl mx-auto px-4'>
             <h1 className='font-bold text-2xl text-center md:text-left'>Profile</h1>
             <div className='flex flex-col md:flex-row items-center md:items-start gap-8 my-5'>
                 <div className='flex flex-col items-center'>
