@@ -98,7 +98,7 @@ const Navbar = () => {
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuItem>
                                                     <LayoutDashboard />
-                                                    <span>Dashboard</span>
+                                                    <Link to="/admin/dashboard">Dashboard</Link>
                                                 </DropdownMenuItem>
                                             </>
                                         )
